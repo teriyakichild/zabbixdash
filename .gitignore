@@ -1,0 +1,9 @@
+*.pyc
+*.pyo
+myui_plugin_example.egg-info
+build/
+artifacts/
+dist
+rpm-build
+rpms
+.vagrant
