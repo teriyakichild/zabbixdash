@@ -15,3 +15,8 @@ This will create an RPM that
 ## Usage:
 
 myui --config_file=myui.conf  
+
+
+## Known Issues:
+
+If you see an error when installing python-ldap, you'll need to install the openldap-devel package.
