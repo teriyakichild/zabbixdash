@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% block head %}
+{{ extends_base }}
+{{ block_head }}
     <script type="application/javascript">
         $(document).ready(function() {
 
@@ -10,13 +10,13 @@
 
         });
     </script>
-{% end %}
-{% block title %}
- - New Entry
-{% end %}
-{% block sidebar %}
-{% end %}
-{% block body %}
+{{ end }}
+{{ block_title }}
+ - Example Controller
+{{ end }}
+{{ block_sidebar }}
+{{ end }}
+{{ block_body }}
       <div class="rs-content">
           <div class="rs-detail-section">
             <div class="rs-detail-section-header">
@@ -28,4 +28,4 @@
           </div>
     </div>
 
-{% end %}
+{{ end }}

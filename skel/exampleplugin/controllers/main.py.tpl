@@ -1,4 +1,4 @@
-from myui_plugin_example.base import BaseHandler
+from {{ plugin_name }}.base import BaseHandler
 import tornado.web
 from datetime import datetime
 

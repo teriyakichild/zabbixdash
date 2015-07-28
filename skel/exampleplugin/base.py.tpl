@@ -6,7 +6,7 @@ from urllib import urlencode
 # Packages
 import tornado.web
 import tornado.escape
-from myui_plugin_example import __version__ as VERSION
+from {{ plugin_name }} import __version__ as VERSION
 
 
 class BaseHandler(tornado.web.RequestHandler):

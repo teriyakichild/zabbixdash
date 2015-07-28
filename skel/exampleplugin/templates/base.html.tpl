@@ -1,7 +1,8 @@
+{% autoescape None %}
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MyUI Example Plugin - {{ title }}{% block title %}{% end %}</title>
+	<title>{{ title }}</title>
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.css">
 	<script type="application/javascript" src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
@@ -21,7 +22,7 @@
         </script>
         <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
-        {% block head %}{% end %}
+        {{ block_head_end }}
 </head>
 
 <body class="rs-responsive">
@@ -30,9 +31,9 @@
 			<div class="rs-container">
 				<ul class="rs-nav rs-pull-right">
             <li class="rs-nav-item">
-                {% if current_user is None %}
+                {{ ifcurrent_user }}
                         <a class="rs-nav-link" href="/login">Login</a>
-                {% else %}
+                {{ else_v }}
                       <li class="rs-dropdown rs-utility-dropdown">
                         <a class="rs-dropdown-toggle" onClick="toggle_view('dropdown')" href="javascript:void(0);">
                             User: {{ current_user }} <i class="rs-caret"></i>
@@ -44,34 +45,34 @@
                           </li>
                         </ul>
                       </li>
-                {% end %}
+                {{ end }}
             </li>
 				</ul>
 			</div>
 		</div>
-		{% block nav %}
+		{{ block_nav }}
 				<div class="rs-nav-primary" id="mainmenu">
 					<div class="rs-container">
 						<div class="rs-nav-brand">
 							<a href="/"></a>
 						</div>
 						<ul class="rs-nav">
-                                                    {% for name, link in nav_links %}
-							<li><a href="{{ link }}">{{ name }}</a></li>
-                                                    {% end %}
+                                                    {{ for_name }}
+							<li>{{ link_name }}</li>
+                                                    {{ end }}
 						</ul>
 					</div>
 				</div>
-                {% end %}
+                {{ end }}
 		<div class="rs-body">
 			<div class="rs-container">
 				<div class="rs-main">
 					<div class="rs-content rs-panel">
 						<div class="rs-inner">
-							<h2 class="rs-page-title">MyUI Example Plugin</h2>
-							{% block body %}
+							<h2 class="rs-page-title">{{ app_title }}</h2>
+							{{ block_body }}
 
-							{% end %}
+							{{ end }}
 						</div>
 					</div>
 				</div>
@@ -82,7 +83,7 @@
 	<div class="rs-nav-footer">
 		<div class="rs-container">
 			<ul class="rs-nav">
-                                <li class="rs-nav-item">MyUI Example Plugin v{{ VERSION }}</li>
+                                <li class="rs-nav-item">{{ app_title }} v{{ VERSION }}</li>
 				<li class="rs-nav-item">&copy; Rackspace, US</li>
 				<li class="rs-nav-item"><a class="rs-nav-link" href="http://www.rackspace.com/information/legal/websiteterms" target="blank">Website Terms</a>
 				<li class="rs-nav-item"><a class="rs-nav-link" href="http://www.rackspace.com/information/legal/privacystatement" target="blank">Privacy Policy</a>

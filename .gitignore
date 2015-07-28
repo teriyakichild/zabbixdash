@@ -1,6 +1,6 @@
 *.pyc
 *.pyo
-myui_plugin_example.egg-info
+exampleplugin.egg-info
 build/
 artifacts/
 dist

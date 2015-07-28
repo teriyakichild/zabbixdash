@@ -3,7 +3,7 @@ from pip.req import parse_requirements
 from setuptools import setup
 from sys import path
 
-from exampleplugin import __version__ as VERSION
+from {{ plugin_name }} import __version__ as VERSION
 
 
 def read(fname):
@@ -15,7 +15,7 @@ reqs = [str(ir.req) for ir in parse_requirements(
 
 path.insert(0, '.')
 
-NAME = "exampleplugin"
+NAME = "{{ plugin_name }}"
 
 
 def gen_data_files(base_target, *dirs):
@@ -39,11 +39,11 @@ if __name__ == "__main__":
     setup(
         name=NAME,
         version=VERSION,
-        description="description",
+        description="{{ description }}",
         long_description=read('README.md'),
-        author="Tony Rogers",
-        author_email="tony.rogers@rackspace.com",
-        url="https://github.com/teriyakichild/exampleplugin",
+        author="{{ github_name }}",
+        author_email="{{ github_email }}",
+        url="https://github.com/{{ github_username }}/{{ plugin_name }}",
         license='internal use',
         packages=[NAME, NAME + '.controllers'],
         package_dir={NAME: NAME},
