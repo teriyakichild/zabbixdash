@@ -7,3 +7,4 @@ dist
 rpm-build
 rpms
 .vagrant
+backup
