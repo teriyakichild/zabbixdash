@@ -83,7 +83,7 @@
 	<div class="rs-nav-footer">
 		<div class="rs-container">
 			<ul class="rs-nav">
-                                <li class="rs-nav-item">{{ app_title }} v{{ VERSION }}</li>
+                                <li class="rs-nav-item">{{ app_title }} v{{ version }}</li>
 				<li class="rs-nav-item">&copy; Rackspace, US</li>
 				<li class="rs-nav-item"><a class="rs-nav-link" href="http://www.rackspace.com/information/legal/websiteterms" target="blank">Website Terms</a>
 				<li class="rs-nav-item"><a class="rs-nav-link" href="http://www.rackspace.com/information/legal/privacystatement" target="blank">Privacy Policy</a>
