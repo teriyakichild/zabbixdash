@@ -1,10 +1,19 @@
 from tornado import template
 import pdb
+import ConfigParser
 from os import path, walk, makedirs
 from sys import stdout, argv
 
 class Manage(object):
     def __init__(self, verbose=False):
+        self._Config = ConfigParser.ConfigParser()
+        self._Config.read('plugin.conf')
+        if self._Config.has_section('options'):
+            self.options = dict(self._Config.items('options'))
+            self.options.update(dict(self._Config.items('internal')))
+        else:
+            stdout.write('Unable to read config file (plugin.conf)\n')
+            exit(2)
         self.skel_dir = '{0}/skel'.format(path.dirname(path.realpath(__file__)))
         self.loader = template.Loader(self.skel_dir)
         self.verbose = verbose
@@ -14,32 +23,8 @@ class Manage(object):
 
     def load_template(self, filename):
         ret = self.loader.load(filename).generate(
-                plugin_name='exampleplugin',
-                app_title='MyUI Example Plugin',
-                cookie_secret='this is the secert, broskis',
-                github_username='teriyakichild',
-                github_email='tony.rogers@rackspace.com',
-                github_name='Tony Rogers',
-                description='description',
-                block_head_end='{% block head %}{% end %}',
-                current_user='{{ current_user }}',
-                link_name='<a href="{{ link }}">{{ name }}</a>',
-                VERSION='{{ VERSION }}',
-                ifcurrent_user='{% if current_user is None %}',
-                end='{% end %}',
-                block_nav='{% block nav %}',
-                block_body='{% block body %}',
-                for_name='{% for name, link in nav_links %}',
-                block_head='{% block head %}',
-                block_title='{% block title %}',
-                block_sidebar='{% block sidebar %}',
-                else_v='{% else %}',
-                error='{{ error }}',
-                if_error='{% if error %}',
-                extends_base='{% extends "base.html" %}',
-                block_title_login='{% block title %} | Login{% end %}',
-                title='Example Plugin - {{ title }}{% block title %}{% end %}'
-            )
+            **self.options
+        )
         return ret
 
     def _load_dirs_files(self):
