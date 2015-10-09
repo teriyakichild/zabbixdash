@@ -1,10 +1,10 @@
 *.pyc
 *.pyo
-exampleplugin.egg-info
+zabbixdash.egg-info
 build/
 artifacts/
 dist
 rpm-build
 rpms
 .vagrant
-backup
+dashboards.db

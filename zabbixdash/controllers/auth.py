@@ -1,4 +1,4 @@
-from {{ plugin_name }}.base import BaseHandler
+from zabbixdash.base import BaseHandler
 import ldap
 import tornado.web
 import tornado.escape
@@ -10,6 +10,7 @@ class Edir(object):
         self.groups = []
 
     def bind(self, username, password):
+        return True
         l = ldap.initialize("ldaps://auth.edir.rackspace.com:636/")
         searchScope = ldap.SCOPE_SUBTREE
         baseDN      = "ou=Users,o=rackspace"

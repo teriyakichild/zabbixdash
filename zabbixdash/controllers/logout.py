@@ -1,4 +1,4 @@
-from {{ plugin_name }}.base import BaseHandler
+from zabbixdash.base import BaseHandler
 import tornado.web
 
 

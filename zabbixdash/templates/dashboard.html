@@ -1,5 +1,5 @@
-{{ extends_base }}
-{{ block_head }}
+{% extends "base.html" %}
+{% block head %}
     <script type="application/javascript">
         $(document).ready(function() {
 
@@ -10,22 +10,24 @@
 
         });
     </script>
-{{ end }}
-{{ block_title }}
+{% end %}
+{% block title %}
  - Example Controller
-{{ end }}
-{{ block_sidebar }}
-{{ end }}
-{{ block_body }}
+{% end %}
+{% block sidebar %}
+{% end %}
+{% block body %}
       <div class="rs-content">
           <div class="rs-detail-section">
             <div class="rs-detail-section-header">
               <h2 class="rs-page-title">Example Page with Example Form:</h2>
             </div>
             <div class="rs-detail-section-body">
-              Example Controller
+              {% for item in dashboard %}
+                <img src="http://{{ item['zabbix_host'] }}/zabbix/chart.php?itemid={{ item['item'] }}&period=3600" />
+              {% end %}
             </div>
           </div>
     </div>
 
-{{ end }}
+{% end %}

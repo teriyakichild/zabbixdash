@@ -1,10 +1,10 @@
-from {{ plugin_name }}.base import BaseHandler
+from zabbixdash.base import BaseHandler
 import tornado.web
 from datetime import datetime
 
 
 class params(object):
-    route = '/'
+    route = '/graph'
     pass
 
 

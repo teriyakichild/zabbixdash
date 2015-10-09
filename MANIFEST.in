@@ -1,4 +1,4 @@
-recursive-include exampleplugin *
+recursive-include zabbixdash *
 include README.md
 include requirements.txt
 include myui.conf

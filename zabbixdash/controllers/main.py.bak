@@ -1,0 +1,70 @@
+from zabbixdash.base import BaseHandler
+import tornado.web
+from datetime import datetime
+
+
+class params(object):
+    route = '/'
+    pass
+
+
+class Handler(BaseHandler):
+    @tornado.web.removeslash
+    @tornado.web.authenticated
+    def get(self):
+        zabbix_host = self.get_argument('zabbix_host', 'default')
+        host = self.get_argument('host', 'default')
+        item = self.get_argument('item', 'default')
+        dashboard = self.get_argument('dashboard', 'new')
+        add = self.get_argument('add', False)
+        refresh = self.get_argument('refresh', False)
+
+        handles = self.zabbix_handles
+        if len(handles) > 0:
+            if zabbix_host == 'default':
+                zapi = handles.itervalues().next()
+            else:
+                zapi = handles.get(zabbix_host, None)
+        else:
+            zapi = None
+
+        if zapi is None:
+            hosts = []
+            items = []
+        else:
+            hosts = zapi.host.get(output=['hostid','host'], sortorder='host')
+            if host == 'default':
+                hostid = hosts[0]['hostid']
+            else:
+                hostid = host
+            items = zapi.item.get(filter={'hostid': hostid}, output=['name'], sortorder='name')
+
+        if add:
+            print 'Adding'
+            if dashboard == 'new':
+                try:
+                    newid = max(self.dashboards.keys()) + 1
+                except ValueError:
+                    newid = 1
+                self.dashboards[newid]=[
+                    {'zabbix_host':zabbix_host, 'host':host, 'item':item}
+                ]
+            else:
+                self.dashboards.setdefault(dashboard, []).append(
+                    {'zabbix_host':zabbix_host, 'host':host, 'item':item}
+                )
+
+        self.render(
+            'main.html',
+            hosts=hosts,
+            items=items,
+            dashboards=self.dashboards,
+            zabbix_host=zabbix_host,
+            host=host,
+            item=item,
+            title='main'
+        )
+
+    #@tornado.web.authenticated
+    def post(self):
+        self.redirect('/')

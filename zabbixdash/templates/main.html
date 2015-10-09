@@ -1,4 +1,4 @@
-{% extends &quot;base.html&quot; %}
+{% extends "base.html" %}
 {% block head %}
     <script type="application/javascript">
         $(document).ready(function() {
@@ -23,7 +23,18 @@
               <h2 class="rs-page-title">Example Page with Example Form:</h2>
             </div>
             <div class="rs-detail-section-body">
-              Example Controller
+              {% for handle in hosts %}
+                {{ handle }}<br />
+                <table cellspacing="0" cellpadding="5px">
+                {% for host in hosts[handle] %}
+                  <tr title="{{ host['error'] }}">
+                    <td>{{ host['hostid'] }}</td>
+                    <td>{{ host['host'] }}</td>
+                    <td><span style="color: {{ states[int(host['available'])]['color'] }}">{{ states[int(host['available'])]['text'] }}</span></td>
+                  </tr>
+                {% end %}
+                </table>
+              {% end %}
             </div>
           </div>
     </div>

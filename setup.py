@@ -3,19 +3,24 @@ from pip.req import parse_requirements
 from setuptools import setup
 from sys import path
 
-from exampleplugin import __version__ as VERSION
+from zabbixdash import __version__ as VERSION
 
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
-# parse_requirements() returns generator of pip.req.InstallRequirement objects
-reqs = [str(ir.req) for ir in parse_requirements(
-    os.path.join(os.path.dirname(__file__), 'requirements.txt'))]
+try:
+    # parse_requirements() returns generator of pip.req.InstallRequirement objects
+    reqs = [str(ir.req) for ir in parse_requirements(
+        os.path.join(os.path.dirname(__file__), 'requirements.txt'))]
+except:
+    # Same as above but handle newer version of pip
+    reqs = [str(ir.req) for ir in parse_requirements(
+        os.path.join(os.path.dirname(__file__), 'requirements.txt'), session='')]
 
 path.insert(0, '.')
 
-NAME = "exampleplugin"
+NAME = "zabbixdash"
 
 
 def gen_data_files(base_target, *dirs):
@@ -43,7 +48,7 @@ if __name__ == "__main__":
         long_description=read('README.md'),
         author="Tony Rogers",
         author_email="tony.rogers@rackspace.com",
-        url="https://github.com/teriyakichild/exampleplugin",
+        url="https://github.com/teriyakichild/zabbixdash",
         license='internal use',
         packages=[NAME, NAME + '.controllers'],
         package_dir={NAME: NAME},
