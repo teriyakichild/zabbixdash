@@ -99,6 +99,9 @@ class BaseHandler(tornado.web.RequestHandler):
         # Add VERSION to kwargs
         kwargs['VERSION'] = VERSION
 
+        # Add app_title from config file
+        kwargs['app_title'] = self.settings['app_title']
+
         # Add self.nav_links, which is set in __init__() above,  to kwargs
         kwargs['nav_links'] = kwargs.get('nav_links', self.nav_links)
 
