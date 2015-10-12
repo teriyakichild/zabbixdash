@@ -19,13 +19,14 @@ class Handler(BaseHandler):
             args['limit'] = limit
 
         args['output'] = 'extend'
-            
-        results = []
-        for host, zapi in self.zabbix_handles.iteritems():
-            tmp = getattr(zapi, method).get(**args)
-            for each in tmp:
-                each['zabbixhost'] = host
-                results.append(each)
+        results = {}
+        hosts = []
+        for host in self.zabbix_handles:
+            hosts.append(host)
+            self.zapi_cache(host, method, args)
+            objects = self.cache.get(method, {}).get(host, [])
+            for each in objects:
+                results.setdefault(each[unique_key], {})[host] = True
         self.render(
             'table.html',
             objects=results,
