@@ -8,3 +8,4 @@ rpm-build
 rpms
 .vagrant
 dashboards.db
+myui.conf

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block head %}
+    <script type="application/javascript">
+        $(document).ready(function() {
+
+                $(".rs-collapsible-section .rs-detail-section-header").click(function()
+                {
+                        $(this).parent().toggleClass("collapsed expanded");
+                });
+
+        });
+    </script>
+{% end %}
+{% block title %}
+ - {{ title }}
+{% end %}
+{% block sidebar %}
+{% end %}
+{% block body %}
+      <div class="rs-content">
+          <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+              <h2 class="rs-page-title">{{ title }}</h2>
+            </div>
+            <div class="rs-detail-section-body">
+              {% for handle in actions %}
+                {{ handle }}<br />
+
+                {% module Table(actions[handle], ["actionid", "name", "status", "def_shortdata", "esc_period", "evaltype", "def_longdata", "eventsource", "actionid", "r_shortdata", "r_longdata", "recovery_msg"]) %}
+
+              {% end %}
+            </div>
+          </div>
+    </div>
+
+{% end %}

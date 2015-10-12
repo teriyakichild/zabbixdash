@@ -5,8 +5,9 @@
 	<title>{{ app_title }} - {{ title }}{% block title %}{% end %}</title>
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.css">
-	<script type="application/javascript" src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="application/javascript" src="https://da722f248d16af572296-060dd8220fb3d3a823ad21f55972a50f.ssl.cf1.rackcdn.com/jquery-1.11.3.min.js"></script>
 	<script type="application/javascript" src="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.js"></script>
+        <script type="application/javascript" src="https://da722f248d16af572296-060dd8220fb3d3a823ad21f55972a50f.ssl.cf1.rackcdn.com/jquery.tablesorter.min.js"></script>
         <script type="application/javascript">
             function toggle_view(name) {
                 element = document.getElementById(name)
@@ -19,6 +20,16 @@
                 }
                 return
             }
+
+            // Table sorting. Add css selectors below
+            $(document).ready(function(){
+              $("table.rs-table-sort").tablesorter(
+                {textExtraction: 'complex',
+                 cssDesc: 'rs-table-sort-desc',
+                 cssAsc: 'rs-table-sort-asc',
+                 cssHeader: 'rs-table-sort'}
+              );
+            });
         </script>
         <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/static/favicon.ico" type="image/x-icon">

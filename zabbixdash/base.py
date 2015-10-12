@@ -8,6 +8,7 @@ import tornado.web
 import tornado.escape
 from myui import create_tables
 from zabbixdash import __version__ as VERSION
+from zabbixdash import ui_modules
 from pyzabbix import ZabbixAPI
 
 cursors = create_tables(get_settings=False)
@@ -15,7 +16,7 @@ cursors = create_tables(get_settings=False)
 class BaseHandler(tornado.web.RequestHandler):
     zabbix_handles={}
     dashboards={}
-    hosts={}
+    cache={}
 
     def data_received(self, chunk):
         super(BaseHandler, self).data_received(chunk)
@@ -46,9 +47,16 @@ class BaseHandler(tornado.web.RequestHandler):
                 )
 
                 # Create the zabbix host cache
-                self.update_hostcache(
+                self.zapi_cache(
                     endpoint['uri'],
-                    self.zabbix_handles[endpoint['uri']]
+                    'host',
+                    {'output': ['available', 'host', 'status', 'hostid', 'proxy_hostid', 'error']}
+                )
+                # Create the zabbix action cache
+                self.zapi_cache(
+                    endpoint['uri'],
+                    'action',
+                    {'output': ['available', 'host', 'status', 'hostid', 'proxy_hostid', 'error']}
                 )
 
         self.nav_links = [
@@ -91,6 +99,18 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def update_hostcache(self, host, zapi):
         self.hosts[host] = zapi.host.get(output=['available', 'host', 'status', 'hostid', 'proxy_hostid', 'error'])
+
+    def update_actioncache(self, host, zapi):
+        'status', 'def_shortdata', 'name', 'esc_period', 'evaltype', 'def_longdata', 'eventsource', 'actionid', 'r_shortdata', 'r_longdata', 'recovery_msg'
+        self.actions[host] = zapi.action.get(output='extend')
+
+    def zapi_cache(self, host, method, args):
+        z = self.zabbix_handles.get(host, False)
+        if z:
+            ret = getattr(z, method).get(**args)
+            self.cache.setdefault(method, {})[host] = ret
+
+
 
     def render(self, template_name, **kwargs):
         """ We are overriding the render method in order to provide common objects

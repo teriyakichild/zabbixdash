@@ -1,6 +1,6 @@
 app_title='Zabbix Dashboard'
 cookie_secret='this is the secert, broskis'
-debug=True
+debug=False
 
 plugins='zabbixdash'
 template_path='zabbixdash/templates'
@@ -15,25 +15,25 @@ plugin_opts = {
     'auth': {
       'method': 'ldap',
       'ldap': {
-        'uri': 'ldaps://ldap.example.com:636/',
+        'uri': 'ldaps://ldap.company.com:636/',
         'baseDN': 'ou=users,o=company',
         },
     },
     'endpoints': [
             {
-                'name': 'Zabbix 1',
-                'uri': 'https://example.zabbix.com/zabbix',
-                'user': 'zabbixdash',
+                'name': 'Dev',
+                'uri': 'https://zabbix.dev.company.com/zabbix',
+                'user': 'user',
                 'pass': '',
                 'ssl_verify': False
             },
             {
-                'name': 'Zabbix 2',
-                'uri': 'https://example2.zabbix.com/zabbix',
-                'user': 'zabbixdash',
+                'name': 'Staging',
+                'uri': 'https://zabbix.staging.company.com/zabbix',
+                'user': 'user',
                 'pass': '',
                 'ssl_verify': False
             }
         ]
-     }
+      }
   }

@@ -1,0 +1,24 @@
+
+<table class="rs-table-sort rs-list-table">
+    <thead>
+        <tr>
+            {% for heading in display_keys %}
+                <th>
+                    <a href="#list-table" class="rs-table-sort"><span class="rs-table-sort-text">{{ heading }}</span></a>
+                    <span class="rs-table-sort-indicator"></span>
+                </th>
+            {% end %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in objects %}
+            <tr>
+                {% for key in display_keys %}
+                    <td>
+                        {{ object[key] }}
+                    </td>
+                {% end %}
+            </tr>
+        {% end %}
+    </tbody>
+</table>
