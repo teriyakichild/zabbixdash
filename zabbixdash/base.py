@@ -38,8 +38,9 @@ class BaseHandler(tornado.web.RequestHandler):
 
         # Create Zabbix Handles from the config file
         for endpoint in self.config['endpoints']:
-            if not self.zabbix_handles.get(endpoint['uri'], False):
+            if not self.zabbix_handles.get(endpoint['name'], False):
                 self.set_zabbix_handle(
+                    endpoint['name'],
                     endpoint['uri'],
                     endpoint['user'],
                     endpoint['pass'],
@@ -48,13 +49,13 @@ class BaseHandler(tornado.web.RequestHandler):
 
                 # Create the zabbix host cache
                 self.zapi_cache(
-                    endpoint['uri'],
+                    endpoint['name'],
                     'host',
                     {'output': ['available', 'host', 'status', 'hostid', 'proxy_hostid', 'error']}
                 )
                 # Create the zabbix action cache
                 self.zapi_cache(
-                    endpoint['uri'],
+                    endpoint['name'],
                     'action',
                     {'output': ['available', 'host', 'status', 'hostid', 'proxy_hostid', 'error']}
                 )
@@ -78,14 +79,14 @@ class BaseHandler(tornado.web.RequestHandler):
         self.User.create(name=username)
         return True
 
-    def set_zabbix_handle(self, host, user, password, ssl_verify):
-        if not self.zabbix_handles.get(host, False):
+    def set_zabbix_handle(self, name, host, user, password, ssl_verify):
+        if not self.zabbix_handles.get(name, False):
             zapi = ZabbixAPI(host)
             zapi.session.verify = ssl_verify
             zapi.login(user, password)
 
             self.Server.create(host=host, token=zapi.auth)
-            self.zabbix_handles[host] = zapi
+            self.zabbix_handles[name] = zapi
             ret = zapi
         else:
             ret = self.zabbix_handles[host]
