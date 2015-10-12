@@ -107,10 +107,16 @@ class BaseHandler(tornado.web.RequestHandler):
     def zapi_cache(self, host, method, args):
         z = self.zabbix_handles.get(host, False)
         if z:
-            ret = getattr(z, method).get(**args)
+            try:
+                ret = getattr(z, method).get(**args)
+            except Exception as e:
+                if 'Not Authorized' in str(e):
+                    endpoint = [endpoint for endpoint in self.config['endpoints'] if endpoint['name'] == host][0]
+                    z.login(endpoint['user'], endpoint['password'])
+                    ret = getattr(z, method).get(**args)
+                else:
+                    ret = []
             self.cache.setdefault(method, {})[host] = ret
-
-
 
     def render(self, template_name, **kwargs):
         """ We are overriding the render method in order to provide common objects
