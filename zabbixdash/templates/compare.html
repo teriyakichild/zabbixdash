@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block head %}
+    <script type="application/javascript">
+        $(document).ready(function() {
+
+                $(".rs-collapsible-section .rs-detail-section-header").click(function()
+                {
+                        $(this).parent().toggleClass("collapsed expanded");
+                });
+
+        });
+    </script>
+{% end %}
+{% block title %}
+ - {{ title }}
+{% end %}
+{% block sidebar %}
+{% end %}
+{% block body %}
+      <div class="rs-content">
+          <div class="rs-detail-section">
+            <div class="rs-detail-section-header">
+              <h2 class="rs-page-title">{{ title }}</h2>
+            </div>
+            <div class="rs-detail-section-body">
+                <table class="rs-table-sort rs-list-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="#list-table" class="rs-table-sort"><span class="rs-table-sort-text">{{ unique_key }}</span></a>
+                                <span class="rs-table-sort-indicator"></span>
+                            </th>
+                            {% for host in hosts %}
+                                <th>
+                                    <a href="#list-table" class="rs-table-sort"><span class="rs-table-sort-text">{{ host }}</span></a>
+                                    <span class="rs-table-sort-indicator"></span>
+                                </th>
+                            {% end %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, zabbix_hosts in results.iteritems() %}
+                            <tr>
+                              <td>{{ key }}</td>
+                              {% for host in hosts %}
+                                {% if host in zabbix_hosts %}
+                                  <td>X</td>
+                                {% else %}
+                                  <td></td>
+                                {% end %}
+                              {% end %}
+                            </tr>
+                        {% end %}
+                    </tbody>
+                </table>
+
+            </div>
+          </div>
+    </div>
+
+{% end %}
